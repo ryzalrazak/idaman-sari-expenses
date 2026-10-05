@@ -34,6 +34,18 @@ Use **Supabase Free** for the first version. It combines Postgres, Auth for Riza
 4. Fill `VITE_SUPABASE_URL` and `VITE_SUPABASE_PUBLISHABLE_KEY`.
 5. Replace the localStorage persistence in `src/App.tsx` with Supabase queries/mutations. The SQL schema mirrors the React types.
 
+## Google Sheet mirror
+The app can mirror every user-created or updated expense, survey item, budget and category to the original **Idaman Sari Expenses** workbook.
+
+1. Open the workbook and create a bound Google Apps Script project.
+2. Copy `google-apps-script/Code.gs` into the project.
+3. Add a Script Property named `SHEET_SYNC_SECRET` with a long random value.
+4. Deploy the script as a Web App that executes as the spreadsheet owner.
+5. Add the deployment URL to Vercel as `GOOGLE_SHEETS_WEBHOOK_URL`.
+6. Add the same secret to Vercel as the sensitive variable `GOOGLE_SHEETS_WEBHOOK_SECRET`.
+
+The browser never receives the Sheet webhook URL or secret. The Vercel function validates the app origin and record shape, then performs an ID-based upsert through Apps Script. The workbook's formulas, dropdowns and formatting are preserved. Budget Plan and Category Management receive a hidden sync-ID column so later updates target the same row.
+
 ## GitHub + Vercel
 1. Create a GitHub repo and push this folder.
 2. Import that repo into Vercel.
