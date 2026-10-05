@@ -1,0 +1,1 @@
+export default function StatCard({label,value,hint,tone='default'}:{label:string;value:string;hint?:string;tone?:'default'|'good'|'warn'|'bad'}){return <article className={`stat-card tone-${tone}`}><span className="eyebrow">{label}</span><strong>{value}</strong>{hint&&<small>{hint}</small>}</article>}
